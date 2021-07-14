@@ -68,7 +68,7 @@ document.body.onkeyup = function() { //get input release
 	}
 }
 window.onresize = function(){ //resize with screen
-	window.resizeCanvas(window.innerWidth,window.innerHeight)
+	resizeCanvas(window.innerWidth,window.innerHeight)
 	CELL = Math.floor(window.innerHeight/30)
 	textSize(CELL)
 }
@@ -145,8 +145,6 @@ class Eyes {
 		circle(this.pos.x*CELL+(CELL/2),this.pos.y*CELL+(CELL/2),CELL*1.5)
 	}
 }
-
-
 class ScoreText{
 	constructor(x,y,simple,text,color=[0xff,0xff,0xff]){
 		this.pos = createVector(x,y)
@@ -192,10 +190,10 @@ function reset(full=1){ //reset positions, level, or game
 		level = 0
 		score = 0
 	}
-	new Ghost(13,11,0) //recreate ghosts
-	new Ghost(13,13,1)
-	new Ghost(14,14,2)
-	new Ghost(12,14,3)
+	ghosts.push(new Ghost(13,11,0)) //recreate ghosts
+	ghosts.push(new Ghost(13,13,1))
+	ghosts.push(new Ghost(14,14,2))
+	ghosts.push(new Ghost(12,14,3))
 	pac = new PAC() //reset pacman
 	middleText = "ready?" //are you ready?
 	if (soundEnabled){
