@@ -14,8 +14,8 @@ class PAC{
 			move.y = 0 //no diagonal movement
 		}
 		if (textMap[Math.ceil(this.pos.y)+this.direction.y][this.pos.x+this.direction.x] != 0 || textMap[Math.floor(this.pos.y)+this.direction.y][this.pos.x+this.direction.x] != 0 ){ //if im not going to run into a wall
-			this.pos.x += this.direction.x*gameSpeed
-			this.pos.y += this.direction.y*gameSpeed //move
+			this.pos.x += this.direction.x*(gameSpeed)
+			this.pos.y += this.direction.y*(gameSpeed) //move
 		}
 		if (pac.pos.x % 1 == 0 && pac.pos.y % 1 == 0){ //if pos flat number
 			if (textMap[Math.floor(this.pos.y)+move.y][this.pos.x	+move.x] != 0 && (move.x != 0 || move.y != 0)){ // and I wont turn into a wall.

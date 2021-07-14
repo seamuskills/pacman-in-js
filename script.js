@@ -104,8 +104,8 @@ class PowerPellet{ //power pellet
 eyes = [] //list of eyes
 class Eyes {
 	constructor(type,x,y){
+		this.shape = JSON.parse(JSON.stringify(ghost));
 		let p //path variable
-		eyes.push(this)
 		this.type = type //store ghost type
 		this.pos = createVector(x,y) //position
 		let end = pfGrid.grid[14][13] //go to ghost pen
@@ -117,12 +117,14 @@ class Eyes {
 		this.target = createVector(p[0].y, p[0].x) //get inital target
 		this.p = p //store path for later
 		this.pathIndex = 0 //where in the path are we?
+		this.prevpos = this.pos.copy()
 	}
 	update(){
+		this.prevpos = this.pos.copy()
 		let move = createVector(this.pos.x,this.pos.y) //to be modified
 		if (this.pos.dist(this.target) < gameSpeed){ //if close enough to target
 			this.pathIndex++ //we are farther in the path
-			if (this.pathIndex >= this.p.length-1){ //if the last entry
+			if (this.pathIndex >= this.p.length-2){ //if the last entry
 				this.pos = createVector(13,13) //set pos (can cause errors otherwise)
 				ghosts.push(new Ghost(this.pos.x,this.pos.y,this.type,true));
 				eyes.splice(eyes.indexOf(this),1) //remake the ghost but this time they are eaten, then delete these eyes.
@@ -141,8 +143,23 @@ class Eyes {
 		}
 	}
 	show(){
-		fill(0xaa)
-		circle(this.pos.x*CELL+(CELL/2),this.pos.y*CELL+(CELL/2),CELL*1.5)
+    let ghost = this.shape;
+		push()
+    noStroke();
+    translate(this.pos.x*CELL-(7/CELL), this.pos.y*CELL-(7/CELL))
+    //calculate the eye translations
+    let eyeX = Math.sign(this.prevpos.x-this.pos.x)*-1;
+    let eyeY = Math.sign(this.prevpos.y-this.pos.y)*-1;
+    eyeY = eyeX == 0 ? eyeY : Math.min(eyeY, 0);
+    // calculate scale for each part up here
+    drawShapes(
+      [CELL*1.25, CELL*1.25], [14, 14],
+      [ ghost.eyeBack, [eyeX==1?2:0,0] ],
+      [ ghost.eyeBack, [eyeX==1?8:6,0] ],
+      [ ghost.eye, [eyeX + (eyeX==1?2:0),eyeY] ],
+      [ ghost.eye, [eyeX + (eyeX==1?8:6),eyeY] ]
+    )
+    pop()
 	}
 }
 class ScoreText{
@@ -235,7 +252,6 @@ function setup(){
 	pac = new PAC() //pacman
 	width = textMap[0].length-1 //set width and height
 	height = textMap.length-1
-	setUpDots() // set up dots
 	textSize(CELL) //set textSize
 	reset() //call reset to make ghosts.
 }

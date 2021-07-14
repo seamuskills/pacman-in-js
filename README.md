@@ -31,25 +31,12 @@ clyde
 -
 He is called pokey because... well... okay lets just say it, he is stupid. He does his best but he rarely ever attacks pacman directly. usually going up and running away. He doesn't seem to understand that the objective is to kill pacman...
 
-conclusion
---
-you can post your high scores in the comments and also make sure to hit m to enable sound and l to disable lives! You can also press space to pause.
-
-anyways have a nice day, and more importantly have fun!
-
-update
---
-the game now has dot score ramp up and score text for the dots
-ramp up
+dot ramp up
 --
 10 dots eaten = +10 to score for eating dots
 dot score is capped to 100
 dying resets the score to 10
 every other level you complete decreases the requirement for raising the score (up to level 20 where it increases every dot)
-
-score text
---
-this is just text that bounces behind you for eating dots, it shows how much score you got for them.
 
 screenshot
 --
@@ -60,4 +47,13 @@ you may now take screenshots with r
 
 Thanks
 --
-Big thanks to Spotandjake for help with ghost rendering and general js troubles!
+Big thanks to Spotandjake for help with ghost rendering and general js troubles! He was instrumental to getting this to work!
+
+
+extras
+--
+hit m to enable sound and l to disable lives! You can also press space to pause.
+
+good luck and have fun
+--
+thats what I've got for now, have fun!

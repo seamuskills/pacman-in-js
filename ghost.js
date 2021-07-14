@@ -6,7 +6,6 @@ class Ghost{
 		this.target = this.pos.copy() //where this ghost is going
 		this.color = colors[type] //color of ghost
 		this.prev = createVector(0,0) //where it was
-		ghosts.push(this)
 		this.speed = gameSpeed
 		this.prevpos = this.pos
     this.frame = 0;
