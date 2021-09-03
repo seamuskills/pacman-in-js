@@ -61,7 +61,7 @@ function setUpDots(){
 
 let drawMap = () => {
 	let c
-	background(0x0,0x0,0x0)
+	background(0x0,0x0,0x0,255-(255*(powerTimer/10)))
 	if (powerTimer <= 0){
 		powerScore = 100
 		c = color(0x0,0x0,0xff)
