@@ -13,7 +13,9 @@ class Ghost{
     this.shape = JSON.parse(JSON.stringify(ghost));
 	}
 	update(){
-		this.prevpos = this.pos.copy()
+		if (this.pos.dist(this.prev) > 2){
+			this.prevpos = this.pos.copy()
+		}
 		let end //hoisted end variable
 		if (this.type == 0){ //blinky
 			end = pfGrid.grid[floor(pac.pos.y)][floor(pac.pos.x)] //end is pacmans coords
