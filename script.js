@@ -148,12 +148,18 @@ class Eyes {
     noStroke();
     translate(this.pos.x*CELL-(7/CELL), this.pos.y*CELL-(7/CELL))
     //calculate the eye translations
+		this.shape.body.color = [0x88,0x88,0x88,128]
+    this.shape.feet.color = [0x88,0x88,0x88,128]
     let eyeX = Math.sign(this.prevpos.x-this.pos.x)*-1;
     let eyeY = Math.sign(this.prevpos.y-this.pos.y)*-1;
     eyeY = eyeX == 0 ? eyeY : Math.min(eyeY, 0);
     // calculate scale for each part up here
     drawShapes(
       [CELL*1.25, CELL*1.25], [14, 14],
+      [ ghost.body ],
+      [ ghost.body, [7,0], true, 7 ],
+      [ ghost.feet, [0,0], this.frame == 1, 7 ],
+      [ ghost.feet, [7,0], this.frame == 0, 7 ],
       [ ghost.eyeBack, [eyeX==1?2:0,0] ],
       [ ghost.eyeBack, [eyeX==1?8:6,0] ],
       [ ghost.eye, [eyeX + (eyeX==1?2:0),eyeY] ],
@@ -243,6 +249,7 @@ function preload(){
 }
 
 function setup(){
+	loadFont("font.ttf",textFont)
 	loop = sound.ghosts
 	frameRate(60) //make sure fps is 60
 	noStroke() //no outlines
@@ -254,6 +261,7 @@ function setup(){
 	height = textMap.length-1
 	textSize(CELL) //set textSize
 	reset() //call reset to make ghosts.
+	noSmooth()
 }
 function draw(){
 	if (soundEnabled){
@@ -313,6 +321,6 @@ function draw(){
 	rect(width*CELL+CELL,0,window.innerWidth-(width*CELL),window.innerHeight)
 	textAlign(LEFT,TOP)
 	fill(0xff)
-	text(`score: ${score}\nlives: ${lives}\nlevel: ${level+1}\nsound enabled: ${soundEnabled} (m to toggle)\nlives enabled: ${livesEnabled} (l to toggle)`,textMap[0].length*CELL,0) //draw information
+	text(`score: ${score}\nlives: ${lives}\nlevel: ${level+1}\nsound enabled: ${soundEnabled} (m to toggle)\nlives enabled: ${livesEnabled} (l to toggle)\n${Math.round(frameRate())}`,textMap[0].length*CELL,0) //draw information
 	textAlign(CENTER,CENTER) //realign text
 }
