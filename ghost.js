@@ -13,9 +13,6 @@ class Ghost{
     this.shape = JSON.parse(JSON.stringify(ghost));
 	}
 	update(){
-		if (this.pos.dist(this.prev) > 2){
-			this.prevpos = this.pos.copy()
-		}
 		let end //hoisted end variable
 		if (this.type == 0){ //blinky
 			end = pfGrid.grid[floor(pac.pos.y)][floor(pac.pos.x)] //end is pacmans coords
@@ -70,6 +67,7 @@ class Ghost{
 			for (let node of pfGrid.nodes){ //unclose nodes (should be done by lib but isnt)
 				node.closed = false
 			}
+			this.prevpos = this.pos.copy()
 		}
 		move.sub(this.target) // get difference vector
 		move.normalize() //normalize it
@@ -93,6 +91,8 @@ class Ghost{
 		}
 	}
 	show(){
+		//debug tool: uncomment to show prev position
+		//rect(this.prev.x*CELL,this.prev.y*CELL,CELL,CELL)
     let ghost = this.shape;
 		push()
 		this.shape.body.color = this.color;
