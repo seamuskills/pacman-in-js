@@ -21,6 +21,7 @@ let ghosts = [] //list of ghosts
 let dots = [] //list of dots
 let eyes = [] //list of eyes
 let textList = [] //list of text
+let fadeEffect = true
 
 document.body.onkeydown = function() { //get input
 	if (!(input.includes(event.key))){
@@ -33,6 +34,8 @@ document.body.onkeyup = function() { //get input release
 		livesEnabled = !livesEnabled
 	}else if (event.key == "m"){ //toggle sound
 		soundEnabled = !soundEnabled
+	}else if (event.key == "e"){
+		fadeEffect = !fadeEffect
 	}else if (event.key == " " && !(middleText != "paused" && stopped) && middleText != "go!"){ //pause game
 		stopped = !stopped
 		if (stopped){
@@ -321,6 +324,6 @@ function draw(){
 	rect(width*CELL+CELL,0,window.innerWidth-(width*CELL),window.innerHeight)
 	textAlign(LEFT,TOP)
 	fill(0xff)
-	text(`score: ${score}\nlives: ${lives}\nlevel: ${level+1}\nsound enabled: ${soundEnabled} (m to toggle)\nlives enabled: ${livesEnabled} (l to toggle)\n${Math.round(frameRate())}`,textMap[0].length*CELL,0) //draw information
+	text(`score: ${score}\nlives: ${lives}\nlevel: ${level+1}\nsound enabled: ${soundEnabled} (m to toggle)\nlives enabled: ${livesEnabled} (l to toggle)\npower pellet effect: ${fadeEffect} (e to toggle)\n${Math.round(frameRate())}`,textMap[0].length*CELL,0) //draw information
 	textAlign(CENTER,CENTER) //realign text
 }
