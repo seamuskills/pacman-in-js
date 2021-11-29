@@ -1,4 +1,8 @@
 let CELL = Math.floor(window.innerHeight/30) //TODO: fix this
+if (isMobile()){
+	CELL = Math.floor(window.innerWidth/26)
+}
+
 const textMap =[
 '000000000000000000000000000',
 '0............0............0',

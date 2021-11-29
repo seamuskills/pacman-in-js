@@ -23,6 +23,20 @@ let eyes = [] //list of eyes
 let textList = [] //list of text
 let fadeEffect = true
 let fancyGhost = false
+let mc = undefined
+
+function swiped(event) {
+	input = []
+	if (event.direction == 4) {
+		input.push("d")
+	} else if (event.direction == 8) {
+		input.push("w")
+	} else if (event.direction == 16) {
+		input.push("s")
+	} else if (event.direction == 2) {
+		input.push("a")
+	}
+}
 
 document.body.onkeydown = function() { //get input
 	if (!(input.includes(event.key))){
@@ -51,23 +65,23 @@ document.body.onkeyup = function() { //get input release
 		//canvas to blob async
 		let canvasBlob = (canvas) => new Promise((resolve, reject) => canvas.toBlob(blob => resolve(blob), 'image/png', 0.95));
 		let screenShot = async (canvas) => {
-      try {
-        // get image blob
-      let blob = await canvasBlob(canvas);
-      //set clip board
-      const data = [new ClipboardItem({ [blob.type]: blob })]
-      await navigator.clipboard.write(data);
+			try {
+				// get image blob
+			let blob = await canvasBlob(canvas);
+			//set clip board
+			const data = [new ClipboardItem({ [blob.type]: blob })]
+			await navigator.clipboard.write(data);
 			middleText = "copied to clipboard" 
 			setTimeout(()=>{stopped = false; middleText = ""},1000)
-    	} catch (err) {
-      	console.log(err);
-      	const downloader = document.createElement('a');
-      	downloader.href = canvas.toDataURL('image/png');
-      	downloader.target = '_blank';
-      	downloader.download = "nameoffile";
-      	downloader.click();
+			} catch (err) {
+				console.log(err);
+				const downloader = document.createElement('a');
+				downloader.href = canvas.toDataURL('image/png');
+				downloader.target = '_blank';
+				downloader.download = "nameoffile";
+				downloader.click();
 				middleText = "paused"
-  		}
+			}
 		}
 		screenShot(canvas);
 		stopped = true
@@ -76,6 +90,9 @@ document.body.onkeyup = function() { //get input release
 window.onresize = function(){ //resize with screen
 	resizeCanvas(window.innerWidth,window.innerHeight)
 	CELL = Math.floor(window.innerHeight/30)
+	if (isMobile()){
+		CELL = Math.floor(window.innerWidth/27)
+	}
 	textSize(CELL)
 }
 
@@ -273,6 +290,24 @@ function setup(){
 	textSize(CELL) //set textSize
 	reset() //call reset to make ghosts.
 	noSmooth()
+	//if isMobile(){
+		mc = new Hammer(document.body);
+		mc.get('swipe').set({threshold:2,velocity:0.1,direction: Hammer.DIRECTION_ALL})
+		mc.on("swipe", swiped)
+		mc.add(new Hammer.Tap())
+		mc.add( new Hammer.Tap({ event: 'doubletap', taps: 2 }))
+		mc.get('doubletap').recognizeWith('tap')
+		mc.on("tap doubletap", function(ev) {
+			if (ev.type == "tap" && !(middleText != "paused" && stopped) && middleText != "go!"){ //pause game
+				stopped = !stopped
+				if (stopped){
+					middleText = "paused"
+				}else{
+					middleText = ""
+				}
+			}
+		})
+	//}
 }
 function draw(){
 	if (soundEnabled){
@@ -332,6 +367,10 @@ function draw(){
 	rect(width*CELL+CELL,0,window.innerWidth-(width*CELL),window.innerHeight)
 	textAlign(LEFT,TOP)
 	fill(0xff)
-	text(`score: ${score}\nlives: ${lives}\nlevel: ${level+1}\nsound enabled: ${soundEnabled} (m to toggle)\nlives enabled: ${livesEnabled} (l to toggle)\npower pellet effect: ${fadeEffect} (e to toggle)\nfancy ghosts: ${fancyGhost} (f to toggle)\n${Math.round(frameRate())}`,textMap[0].length*CELL,0) //draw information
+	if (!isMobile()){
+		text(`score: ${score}\nlives: ${lives}\nlevel: ${level+1}\nsound enabled: ${soundEnabled} (m to toggle)\nlives enabled: ${livesEnabled} (l to toggle)\npower pellet effect: ${fadeEffect} (e to toggle)\nfancy ghosts: ${fancyGhost} (f to toggle)\n${Math.round(frameRate())}`,textMap[0].length*CELL,0) //draw information
+	}else{
+		text(`sco:${score}\nliv:${lives}\nlev:${level}\nfps:${Math.round(frameRate())}`,0,textMap.length*CELL)
+	}
 	textAlign(CENTER,CENTER) //realign text
 }

@@ -74,6 +74,7 @@ class PAC{
 					if (soundEnabled){
 						sound.death.play()
 					}
+					
 					if (livesEnabled){ //if lives are enable reduce by a life
 						lives--
 					}
@@ -111,6 +112,7 @@ class PAC{
 					this.mOpen += 2
 				}
 				if (this.mOpen >= 169){ //once mouth is open then reset
+					input = []
 					reset((lives<=0)*2)
 				}
 			}else{ //otherwise

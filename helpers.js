@@ -22,3 +22,7 @@ let drawShape = (
 }
 const drawShapes = (scale, size, ...shapes) => 
   shapes.forEach((shape) => drawShape(shape[0], scale, size, ...shape.slice(1)));
+
+function isMobile() {
+		return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+}
