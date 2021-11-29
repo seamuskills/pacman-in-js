@@ -22,6 +22,7 @@ let dots = [] //list of dots
 let eyes = [] //list of eyes
 let textList = [] //list of text
 let fadeEffect = true
+let fancyGhost = false
 
 document.body.onkeydown = function() { //get input
 	if (!(input.includes(event.key))){
@@ -36,6 +37,8 @@ document.body.onkeyup = function() { //get input release
 		soundEnabled = !soundEnabled
 	}else if (event.key == "e"){
 		fadeEffect = !fadeEffect
+	}else if (event.key == "f"){
+		fancyGhost = !fancyGhost
 	}else if (event.key == " " && !(middleText != "paused" && stopped) && middleText != "go!"){ //pause game
 		stopped = !stopped
 		if (stopped){
@@ -146,29 +149,34 @@ class Eyes {
 		}
 	}
 	show(){
-    let ghost = this.shape;
-		push()
-    noStroke();
-    translate(this.pos.x*CELL-(7/CELL), this.pos.y*CELL-(7/CELL))
-    //calculate the eye translations
-		this.shape.body.color = [0x88,0x88,0x88,128]
-    this.shape.feet.color = [0x88,0x88,0x88,128]
-    let eyeX = Math.sign(this.prevpos.x-this.pos.x)*-1;
-    let eyeY = Math.sign(this.prevpos.y-this.pos.y)*-1;
-    eyeY = eyeX == 0 ? eyeY : Math.min(eyeY, 0);
-    // calculate scale for each part up here
-    drawShapes(
-      [CELL*1.25, CELL*1.25], [14, 14],
-      [ ghost.body ],
-      [ ghost.body, [7,0], true, 7 ],
-      [ ghost.feet, [0,0], this.frame == 1, 7 ],
-      [ ghost.feet, [7,0], this.frame == 0, 7 ],
-      [ ghost.eyeBack, [eyeX==1?2:0,0] ],
-      [ ghost.eyeBack, [eyeX==1?8:6,0] ],
-      [ ghost.eye, [eyeX + (eyeX==1?2:0),eyeY] ],
-      [ ghost.eye, [eyeX + (eyeX==1?8:6),eyeY] ]
-    )
-    pop()
+		if (fancyGhost){
+			let ghost = this.shape;
+			push()
+			noStroke();
+			translate(this.pos.x*CELL-(7/CELL), this.pos.y*CELL-(7/CELL))
+			//calculate the eye translations
+			this.shape.body.color = [0x88,0x88,0x88,128]
+			this.shape.feet.color = [0x88,0x88,0x88,128]
+			let eyeX = Math.sign(this.prevpos.x-this.pos.x)*-1;
+			let eyeY = Math.sign(this.prevpos.y-this.pos.y)*-1;
+			eyeY = eyeX == 0 ? eyeY : Math.min(eyeY, 0);
+			// calculate scale for each part up here
+			drawShapes(
+				[CELL*1.25, CELL*1.25], [14, 14],
+				[ ghost.body ],
+				[ ghost.body, [7,0], true, 7 ],
+				[ ghost.feet, [0,0], this.frame == 1, 7 ],
+				[ ghost.feet, [7,0], this.frame == 0, 7 ],
+				[ ghost.eyeBack, [eyeX==1?2:0,0] ],
+				[ ghost.eyeBack, [eyeX==1?8:6,0] ],
+				[ ghost.eye, [eyeX + (eyeX==1?2:0),eyeY] ],
+				[ ghost.eye, [eyeX + (eyeX==1?8:6),eyeY] ]
+			)
+			pop()
+		}else{
+				fill(0x88,0x88,0x88,128)
+				circle(this.pos.x*CELL+(CELL/2),this.pos.y*CELL+(CELL/2),CELL*1.5) 
+		}
 	}
 }
 class ScoreText{
@@ -324,6 +332,6 @@ function draw(){
 	rect(width*CELL+CELL,0,window.innerWidth-(width*CELL),window.innerHeight)
 	textAlign(LEFT,TOP)
 	fill(0xff)
-	text(`score: ${score}\nlives: ${lives}\nlevel: ${level+1}\nsound enabled: ${soundEnabled} (m to toggle)\nlives enabled: ${livesEnabled} (l to toggle)\npower pellet effect: ${fadeEffect} (e to toggle)\n${Math.round(frameRate())}`,textMap[0].length*CELL,0) //draw information
+	text(`score: ${score}\nlives: ${lives}\nlevel: ${level+1}\nsound enabled: ${soundEnabled} (m to toggle)\nlives enabled: ${livesEnabled} (l to toggle)\npower pellet effect: ${fadeEffect} (e to toggle)\nfancy ghosts: ${fancyGhost} (f to toggle)\n${Math.round(frameRate())}`,textMap[0].length*CELL,0) //draw information
 	textAlign(CENTER,CENTER) //realign text
 }

@@ -91,50 +91,50 @@ class Ghost{
 		}
 	}
 	show(){
-		//debug tool: uncomment to show prev position
-		//rect(this.prev.x*CELL,this.prev.y*CELL,CELL,CELL)
-    let ghost = this.shape;
-		push()
-		this.shape.body.color = this.color;
-    this.shape.feet.color = this.color;
-		if (powerTimer > 0 && !this.eaten){ //if I should be a scared ghost
-      this.shape.body.color = color(0x0,0x0,0xff);
-      this.shape.feet.color = color(0x0,0x0,0xff);
-			if (tick % 60 <= 30 && powerTimer <= 4){
-				//white flashing toward end of power pellet
-        this.shape.body.color = color(0xff);
-        this.shape.feet.color = color(0xff);
-			}
-    }
-    noStroke();
-    translate(this.pos.x*CELL-(7/CELL), this.pos.y*CELL-(7/CELL))
-    //calculate the eye translations
-    let eyeX = Math.sign(this.prevpos.x-this.pos.x)*-1;
-    let eyeY = Math.sign(this.prevpos.y-this.pos.y)*-1;
-    eyeY = eyeX == 0 ? eyeY : Math.min(eyeY, 0);
-    // calculate scale for each part up here
-    drawShapes(
-      [CELL*1.25, CELL*1.25], [14, 14],
-      [ ghost.body ],
-      [ ghost.body, [7,0], true, 7 ],
-      [ ghost.feet, [0,0], this.frame == 1, 7 ],
-      [ ghost.feet, [7,0], this.frame == 0, 7 ],
-      [ ghost.eyeBack, [eyeX==1?2:0,0] ],
-      [ ghost.eyeBack, [eyeX==1?8:6,0] ],
-      [ ghost.eye, [eyeX + (eyeX==1?2:0),eyeY] ],
-      [ ghost.eye, [eyeX + (eyeX==1?8:6),eyeY] ]
-    )
-    pop()
+			if (fancyGhost){
+				//debug tool: uncomment to show prev position
+				//rect(this.prev.x*CELL,this.prev.y*CELL,CELL,CELL)
+				let ghost = this.shape;
+				push()
+				this.shape.body.color = this.color;
+				this.shape.feet.color = this.color;
+				if (powerTimer > 0 && !this.eaten){ //if I should be a scared ghost
+					this.shape.body.color = color(0x0,0x0,0xff);
+					this.shape.feet.color = color(0x0,0x0,0xff);
+					if (tick % 60 <= 30 && powerTimer <= 4){
+						//white flashing toward end of power pellet
+						this.shape.body.color = color(0xff);
+						this.shape.feet.color = color(0xff);
+					}
+				}
+				noStroke();
+				translate(this.pos.x*CELL-(7/CELL), this.pos.y*CELL-(7/CELL))
+				//calculate the eye translations
+				let eyeX = Math.sign(this.prevpos.x-this.pos.x)*-1;
+				let eyeY = Math.sign(this.prevpos.y-this.pos.y)*-1;
+				eyeY = eyeX == 0 ? eyeY : Math.min(eyeY, 0);
+				// calculate scale for each part up here
+				drawShapes(
+					[CELL*1.25, CELL*1.25], [14, 14],
+					[ ghost.body ],
+					[ ghost.body, [7,0], true, 7 ],
+					[ ghost.feet, [0,0], this.frame == 1, 7 ],
+					[ ghost.feet, [7,0], this.frame == 0, 7 ],
+					[ ghost.eyeBack, [eyeX==1?2:0,0] ],
+					[ ghost.eyeBack, [eyeX==1?8:6,0] ],
+					[ ghost.eye, [eyeX + (eyeX==1?2:0),eyeY] ],
+					[ ghost.eye, [eyeX + (eyeX==1?8:6),eyeY] ]
+				)
+				pop()
+			}else{
+				fill(this.color)
+				if (powerTimer > 0 && !this.eaten){ //if I should be a scared ghost
+					fill(0x0,0x0,0xff) 
+					if (tick % 60 <= 30 && powerTimer <= 4){
+						fill(0xff) //white flashing toward end of power pellet
+					}
+				}
+				circle(this.pos.x*CELL+(CELL/2),this.pos.y*CELL+(CELL/2),CELL*1.5) 
+		}
 	}
-
-	//old rendering code that draws a circle
-		//fill(this.color)
-		//if (powerTimer > 0 && !this.eaten){ //if I should be a scared ghost
-		//	fill(0x0,0x0,0xff) 
-		//	if (tick % 60 <= 30 && powerTimer <= 4){
-		//		fill(0xff) //white flashing toward end of power pellet
-		//	}
-		//}
-		//circle(this.pos.x*CELL+(CELL/2),this.pos.y*CELL+(CELL/2),CELL*1.5) 
-	//}
 }
