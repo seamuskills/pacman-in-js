@@ -24,6 +24,27 @@ let textList = [] //list of text
 let fadeEffect = true
 let fancyGhost = false
 let mc = undefined
+let focused = true
+let stoppedBefore = false
+
+function stop(value,ignoreFocus){
+	if (focused || ignoreFocus){
+		stopped = value
+	}
+	stoppedBefore = value
+}
+
+window.onblur = () => {
+	if (stopped){stoppedBefore = true}
+	stopped = true
+	focused = false
+}
+window.onfocus = () => {
+	if (middleText != "paused" && !stoppedBefore){
+		stopped = false
+	}
+	focused = true
+}
 
 function swiped(event) {
 	input = []
@@ -54,7 +75,7 @@ document.body.onkeyup = function() { //get input release
 	}else if (event.key == "f"){
 		fancyGhost = !fancyGhost
 	}else if (event.key == " " && !(middleText != "paused" && stopped) && middleText != "go!"){ //pause game
-		stopped = !stopped
+		stop(!stopped,false)
 		if (stopped){
 			middleText = "paused"
 		}else{
@@ -72,7 +93,7 @@ document.body.onkeyup = function() { //get input release
 			const data = [new ClipboardItem({ [blob.type]: blob })]
 			await navigator.clipboard.write(data);
 			middleText = "copied to clipboard" 
-			setTimeout(()=>{stopped = false; middleText = ""},1000)
+			setTimeout(()=>{stop(false,false); middleText = ""},1000)
 			} catch (err) {
 				console.log(err);
 				const downloader = document.createElement('a');
@@ -84,7 +105,7 @@ document.body.onkeyup = function() { //get input release
 			}
 		}
 		screenShot(canvas);
-		stopped = true
+		stop(true,false)
 	}
 }
 window.onresize = function(){ //resize with screen
@@ -252,7 +273,7 @@ function reset(full=1){ //reset positions, level, or game
 	}
 	setTimeout(function(){ //wait to start
 		middleText = "go!" //go!
-		stopped = false
+		stop(false,false)
 		setTimeout(function(){middleText=""},500) //after a bit get rid of the go text
 	},4000)
 }
@@ -298,8 +319,8 @@ function setup(){
 		mc.add( new Hammer.Tap({ event: 'doubletap', taps: 2 }))
 		mc.get('doubletap').recognizeWith('tap')
 		mc.on("tap doubletap", function(ev) {
-			if (ev.type == "tap" && !(middleText != "paused" && stopped) && middleText != "go!"){ //pause game
-				stopped = !stopped
+			if (isMobile() && ev.type == "tap" && !(middleText != "paused" && stopped) && middleText != "go!"){ //pause game
+				stop(!stopped,false)
 				if (stopped){
 					middleText = "paused"
 				}else{
@@ -335,7 +356,7 @@ function draw(){
 	text(middleText,13*CELL+(CELL/2),17*CELL-(CELL/2)) //middle text
 	if (dots.length == 0 && !stopped){ //if level is complete
 		level++
-		stopped = true
+		stop(true,false)
 		setTimeout(reset,1500) //stop and after a bit reset (level flashing white is contained in map.js)
 	}
 	if (powerTimer > 0 && !stopped){ //if powerpellet

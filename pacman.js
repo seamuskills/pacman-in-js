@@ -98,7 +98,7 @@ class PAC{
 					}
 					setTimeout(function(){ //reset after 500ms
 						pac.scoring = false
-						stopped = false
+						stop(false,false)
 					},500)
 				}
 			}
