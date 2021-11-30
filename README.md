@@ -57,3 +57,7 @@ hit m to enable sound and l to disable lives! You can also press space to pause.
 good luck and have fun
 --
 thats what I've got for now, have fun!
+
+ps:
+--
+If you are reading this from github, the game is playable [here](https://what-if-i-made-pacman-in-js.seamusdonahue.repl.co). Otherwise you can download the project and open index.html to play.
