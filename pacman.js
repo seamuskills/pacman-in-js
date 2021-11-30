@@ -66,7 +66,7 @@ class PAC{
 			}
 		}
 		for (let ghost of ghosts){ //ghost collision
-			if (ghost.pos.dist(this.pos) < 1){
+			if (ghost.pos.dist(this.pos) < 1 && god == 0){
 				if (powerTimer <= 0 || ghost.eaten == true){ //no power pellet active or the ghost was eaten already
 					this.dead = true //im dead!
 					dotScore = 10

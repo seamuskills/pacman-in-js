@@ -26,6 +26,9 @@ let fancyGhost = false
 let mc = undefined
 let focused = true
 let stoppedBefore = false
+let cheatIndex = 0
+let cheat = "sddqd"
+let god = false
 
 function stop(value,ignoreFocus){
 	if (focused || ignoreFocus){
@@ -59,9 +62,19 @@ function swiped(event) {
 	}
 }
 
-document.body.onkeydown = function() { //get input
-	if (!(input.includes(event.key))){
-		input.push(event.key)
+document.body.onkeydown = function({key}) { //get input
+	if (!(input.includes(key))){
+		input.push(key)
+		if (key == cheat[cheatIndex]){
+			cheatIndex++
+			if (cheatIndex == cheat.length){
+				console.log("degreelessness mode toggled ;)")
+				cheatIndex = 0
+				god = !god
+			}
+		}else{
+			cheatIndex = 0
+		}
 	}
 }
 document.body.onkeyup = function() { //get input release
