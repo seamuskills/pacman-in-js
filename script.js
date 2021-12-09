@@ -29,6 +29,10 @@ let stoppedBefore = false
 let cheatIndex = 0
 let cheat = "sddqd"
 let god = false
+let currentfruit = null
+let minFruitTimer = 30
+let maxFruitTimer = 60
+let fruitTimer = ((Math.random()*(maxFruitTimer-minFruitTimer))+minFruitTimer)*60
 
 function stop(value,ignoreFocus){
 	if (focused || ignoreFocus){
@@ -266,6 +270,8 @@ function reset(full=1){ //reset positions, level, or game
 	ghosts = [] //clear ghosts eyes and power pellets
 	eyes = []
 	powerTimer = 0
+	fruitTimer = ((Math.random()*(maxFruitTimer-minFruitTimer))+minFruitTimer)*60
+	currentfruit = null
 	if (full >= 1){ //reset dots level
 		dots = []
 		setUpDots()
@@ -364,6 +370,14 @@ function draw(){
 		loop.pause()
 	}
 	tick++ //increase tick
+	if (fruitTimer <= 0){
+		currentfruit = new Fruit()
+		fruitTimer = ((Math.random()*(maxFruitTimer-minFruitTimer))+minFruitTimer)*60
+	}else if (!stopped){
+		fruitTimer--
+	}else{
+		fruitTimer -= 0.1
+	}
 	drawMap()
 	fill(0xff)
 	text(middleText,13*CELL+(CELL/2),17*CELL-(CELL/2)) //middle text
@@ -396,6 +410,10 @@ function draw(){
 	pac.show() //draw/update pacman
 	if (!stopped){
 		pac.update(eyes)
+	}
+	if (currentfruit != null){
+		currentfruit.show()
+		currentfruit.update()
 	}
 	fill(0x0)
 	rect(width*CELL+CELL,0,window.innerWidth-(width*CELL),window.innerHeight)
