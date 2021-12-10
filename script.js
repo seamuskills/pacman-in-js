@@ -322,6 +322,7 @@ function preload(){
 function setup(){
 	loadFont("font.ttf",textFont)
 	loop = sound.ghosts
+	stop(true)
 	frameRate(60) //make sure fps is 60
 	noStroke() //no outlines
 	resizeCanvas(window.innerWidth,window.innerHeight)
