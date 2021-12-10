@@ -33,6 +33,7 @@ let currentfruit = null
 let minFruitTimer = 30
 let maxFruitTimer = 60
 let fruitTimer = ((Math.random()*(maxFruitTimer-minFruitTimer))+minFruitTimer)*60
+let fancyWalls = false
 
 function stop(value,ignoreFocus){
 	if (focused || ignoreFocus){
@@ -89,6 +90,8 @@ document.body.onkeyup = function() { //get input release
 		soundEnabled = !soundEnabled
 	}else if (event.key == "e"){
 		fadeEffect = !fadeEffect
+	}else if (event.key == "h"){
+		fancyWalls = !fancyWalls
 	}else if (event.key == "f"){
 		fancyGhost = !fancyGhost
 	}else if (event.key == " " && !(middleText != "paused" && stopped) && middleText != "go!"){ //pause game
@@ -420,7 +423,7 @@ function draw(){
 	textAlign(LEFT,TOP)
 	fill(0xff)
 	if (!isMobile()){
-		text(`score: ${score}\nlives: ${lives}\nlevel: ${level+1}\nsound enabled: ${soundEnabled} (m to toggle)\nlives enabled: ${livesEnabled} (l to toggle)\npower pellet effect: ${fadeEffect} (e to toggle)\nfancy ghosts: ${fancyGhost} (f to toggle)\n${Math.round(frameRate())}`,textMap[0].length*CELL,0) //draw information
+		text(`score: ${score}\nlives: ${lives}\nlevel: ${level+1}\nsound enabled: ${soundEnabled} (m to toggle)\nlives enabled: ${livesEnabled} (l to toggle)\npower pellet effect: ${fadeEffect} (e to toggle)\nfancy ghosts: ${fancyGhost} (f to toggle)\nfancy walls: ${fancyWalls} (h to toggle)\n${Math.round(frameRate())}`,textMap[0].length*CELL,0) //draw information
 	}else{
 		text(`sco:${score}\nliv:${lives}\nlev:${level}\nfps:${Math.round(frameRate())}`,0,textMap.length*CELL)
 	}
