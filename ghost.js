@@ -98,13 +98,16 @@ class Ghost{
 				push()
 				this.shape.body.color = this.color;
 				this.shape.feet.color = this.color;
+				this.shape.feet2.color = this.color;
 				if (powerTimer > 0 && !this.eaten){ //if I should be a scared ghost
 					this.shape.body.color = color(0x0,0x0,0xff);
 					this.shape.feet.color = color(0x0,0x0,0xff);
+					this.shape.feet2.color = color(0x0,0x0,0xff);
 					if (tick % 60 <= 30 && powerTimer <= 4){
 						//white flashing toward end of power pellet
 						this.shape.body.color = color(0xff);
 						this.shape.feet.color = color(0xff);
+						this.shape.feet2.color = color(0xff);
 					}
 				}
 				noStroke();
@@ -117,9 +120,8 @@ class Ghost{
 				drawShapes(
 					[CELL*1.25, CELL*1.25], [14, 14],
 					[ ghost.body ],
-					[ ghost.body, [7,0], true, 7 ],
-					[ ghost.feet, [0,0], this.frame == 1, 7 ],
-					[ ghost.feet, [7,0], this.frame == 0, 7 ],
+					[ tick % 25 < 12 ? ghost.feet : ghost.feet2, [0,0], this.frame == 1, 7 ],
+					[ tick % 25 < 12 ? ghost.feet : ghost.feet2, [7,0], this.frame == 0, 7 ],
 					[ ghost.eyeBack, [eyeX==1?2:0,0] ],
 					[ ghost.eyeBack, [eyeX==1?8:6,0] ],
 					[ ghost.eye, [eyeX + (eyeX==1?2:0),eyeY] ],
