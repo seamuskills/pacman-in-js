@@ -22,45 +22,46 @@ class Fruit{
 	show(){
 		switch (this.fruit){
 			case "cherry":
-				stroke(0x0,0xff,0x0)
-				line((this.pos.x+0.25)*CELL,(this.pos.y+0.75)*CELL,(this.pos.x+0.5)*CELL,(this.pos.y+0.25)*CELL)
-				line((this.pos.x+0.75)*CELL,(this.pos.y+0.75)*CELL,(this.pos.x+0.5)*CELL,(this.pos.y+0.25)*CELL)
+				push()
+				translate(this.pos.x*CELL,this.pos.y*CELL)
 				noStroke()
-				fill(0xff,0x0,0x0)
-				circle((this.pos.x+0.25)*CELL,(this.pos.y+0.75)*CELL,CELL/2)
-				circle((this.pos.x+0.75)*CELL,(this.pos.y+0.75)*CELL,CELL/2)
+				drawShape(fruitShapes.cherry,[1,-1],[1,1],[-6,-6])
+				pop()
 			break
 			case "strawberry":
-				fill(0xff,0x0,0x0)
-				triangle((this.pos.x+0.5)*CELL,(this.pos.y+0.85)*CELL,(this.pos.x+0.15)*CELL,(this.pos.y+0.25)*CELL,(this.pos.x+0.85)*CELL,(this.pos.y+0.25)*CELL)
-				fill(0x0,0xff,0x0)
-				ellipse((this.pos.x+0.5)*CELL,(this.pos.y+0.25)*CELL,CELL*0.7,CELL*0.1)
+				push()
+				translate(this.pos.x*CELL,this.pos.y*CELL)
+				noStroke()
+				drawShape(fruitShapes.strawberry,[1,-1],[1,1],[-6,-6])
+				pop()
 			break
 			case "orange":
-				stroke(0x0,0xff,0x0)
-				line((this.pos.x+0.35)*CELL,(this.pos.y+0.1)*CELL,(this.pos.x+0.5)*CELL,(this.pos.y+0.5)*CELL)
+				push()
+				translate(this.pos.x*CELL,this.pos.y*CELL)
 				noStroke()
-				fill(0xff,0xa5,0x0)
-				circle((this.pos.x+0.5)*CELL,(this.pos.y+0.6)*CELL,CELL*0.75)
+				drawShape(fruitShapes.orange,[1,-1],[1,1],[-6,-6])
+				pop()
 			break
 			case "melon":
-				stroke(0x0,0xff,0x0)
-				line((this.pos.x+0.35)*CELL,(this.pos.y+0.1)*CELL,(this.pos.x+0.5)*CELL,(this.pos.y+0.5)*CELL)
+				push()
+				translate(this.pos.x*CELL,this.pos.y*CELL)
 				noStroke()
-				fill(0x00,0x99,0x0)
-				circle((this.pos.x+0.5)*CELL,(this.pos.y+0.6)*CELL,CELL*0.75)
+				drawShape(fruitShapes.melon,[1,-1],[1,1],[-6,-6])
+				pop()
 			break
 			case "bell":
-				fill(0xff,0xff,0x0)
-				triangle((this.pos.x+0.5)*CELL,(this.pos.y+0.15)*CELL,(this.pos.x+0.15)*CELL,(this.pos.y+0.75)*CELL,(this.pos.x+0.85)*CELL,(this.pos.y+0.75)*CELL)
-				fill(0x0,0xff,0xff)
-				ellipse((this.pos.x+0.5)*CELL,(this.pos.y+0.75)*CELL,CELL*0.7,CELL*0.2)
+				push()
+				translate(this.pos.x*CELL,this.pos.y*CELL)
+				noStroke()
+				drawShape(fruitShapes.bell,[1,-1],[1,1],[-6,-6])
+				pop()
 			break
 			case "key":
-				fill(0x66)
-				rect((this.pos.x+0.35)*CELL,(this.pos.y+0.21)*CELL,3,8)
-				fill(0x0,0xff,0xff)
-				rect((this.pos.x+0.3)*CELL,(this.pos.y+0.2)*CELL,4,4)
+				push()
+				translate(this.pos.x*CELL,this.pos.y*CELL)
+				noStroke()
+				drawShape(fruitShapes.key,[1,-1],[1,1],[-6,-6])
+				pop()
 			break
 		}
 	}

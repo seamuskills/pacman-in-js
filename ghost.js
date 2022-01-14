@@ -1,4 +1,4 @@
-class Ghost{
+ class Ghost{
 	constructor(x,y,type,eaten = false){
 		this.eaten = eaten //previously eaten (invulnerable to current power pellet due to being eaten previously)
 		this.pos = createVector(x,y)
