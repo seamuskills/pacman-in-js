@@ -34,6 +34,9 @@ let minFruitTimer = 30
 let maxFruitTimer = 60
 let fruitTimer = ((Math.random()*(maxFruitTimer-minFruitTimer))+minFruitTimer)*60
 let fancyWalls = false
+let gameState = "Menu"
+let menuIndex = "main"
+let selectedIndex = 0
 
 function stop(value,ignoreFocus){
 	if (focused || ignoreFocus){
@@ -70,6 +73,10 @@ function swiped(event) {
 document.body.onkeydown = function({key}) { //get input
 	if (!(input.includes(key))){
 		input.push(key)
+		if (key == "Escape" && !stopped){
+			gameState = "Menu"
+			stop(true,true)
+		}
 		if (key == cheat[cheatIndex]){
 			cheatIndex++
 			if (cheatIndex == cheat.length){
@@ -84,17 +91,7 @@ document.body.onkeydown = function({key}) { //get input
 }
 document.body.onkeyup = function() { //get input release
 	input.splice(input.indexOf(event.key),1)
-	if (event.key == "l"){ //toggle lives
-		livesEnabled = !livesEnabled
-	}else if (event.key == "m"){ //toggle sound
-		soundEnabled = !soundEnabled
-	}else if (event.key == "e"){
-		fadeEffect = !fadeEffect
-	}else if (event.key == "h"){
-		fancyWalls = !fancyWalls
-	}else if (event.key == "f"){
-		fancyGhost = !fancyGhost
-	}else if (event.key == " " && !(middleText != "paused" && stopped) && middleText != "go!"){ //pause game
+	if (event.key == " " && !(middleText != "paused" && stopped) && middleText != "go!"){ //pause game
 		stop(!stopped,false)
 		if (stopped){
 			middleText = "paused"
@@ -332,7 +329,7 @@ function setup(){
 	width = textMap[0].length-1 //set width and height
 	height = textMap.length-1
 	textSize(CELL) //set textSize
-	reset() //call reset to make ghosts.
+	//reset() //call reset to make ghosts.
 	noSmooth()
 	//if isMobile(){
 		mc = new Hammer(document.body);
@@ -353,7 +350,20 @@ function setup(){
 		})
 	//}
 }
+
 function draw(){
+	gameState == "Menu" ? drawMenu() : drawGame()
+}
+
+function drawMenu(){
+	background(0)
+	push()
+	textAlign(LEFT,BOTTOM)
+	drawMenuButtons()
+	pop()
+}
+
+function drawGame(){
 	if (soundEnabled){
 		if (!stopped){
 			loop.play()
@@ -423,10 +433,6 @@ function draw(){
 	rect(width*CELL+CELL,0,window.innerWidth-(width*CELL),window.innerHeight)
 	textAlign(LEFT,TOP)
 	fill(0xff)
-	if (!isMobile()){
-		text(`score: ${score}\nlives: ${lives}\nlevel: ${level+1}\nsound enabled: ${soundEnabled} (m to toggle)\nlives enabled: ${livesEnabled} (l to toggle)\npower pellet effect: ${fadeEffect} (e to toggle)\nfancy ghosts: ${fancyGhost} (f to toggle)\nfancy walls: ${fancyWalls} (h to toggle)\n${Math.round(frameRate())}`,textMap[0].length*CELL,0) //draw information
-	}else{
-		text(`sco:${score}\nliv:${lives}\nlev:${level}\nfps:${Math.round(frameRate())}`,0,textMap.length*CELL)
-	}
+	text(`score: ${score}\nlives: ${lives}\nlevel: ${level+1}\nesc = return to menu`,textMap[0].length*CELL,0) //draw information
 	textAlign(CENTER,CENTER) //realign text
 }

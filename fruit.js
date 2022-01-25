@@ -25,42 +25,42 @@ class Fruit{
 				push()
 				translate(this.pos.x*CELL,this.pos.y*CELL)
 				noStroke()
-				drawShape(fruitShapes.cherry,[1,-1],[1,1],[-6,-6])
+				drawShape(fruitShapes.cherry,[CELL/12,-CELL/12],[1,1],[-6,-6])
 				pop()
 			break
 			case "strawberry":
 				push()
 				translate(this.pos.x*CELL,this.pos.y*CELL)
 				noStroke()
-				drawShape(fruitShapes.strawberry,[1,-1],[1,1],[-6,-6])
+				drawShape(fruitShapes.strawberry,[CELL/12,-CELL/12],[1,1],[-6,-6])
 				pop()
 			break
 			case "orange":
 				push()
 				translate(this.pos.x*CELL,this.pos.y*CELL)
 				noStroke()
-				drawShape(fruitShapes.orange,[1,-1],[1,1],[-6,-6])
+				drawShape(fruitShapes.orange,[CELL/12,-CELL/12],[1,1],[-6,-6])
 				pop()
 			break
 			case "melon":
 				push()
 				translate(this.pos.x*CELL,this.pos.y*CELL)
 				noStroke()
-				drawShape(fruitShapes.melon,[1,-1],[1,1],[-6,-6])
+				drawShape(fruitShapes.melon,[CELL/12,-CELL/12],[1,1],[-6,-6])
 				pop()
 			break
 			case "bell":
 				push()
 				translate(this.pos.x*CELL,this.pos.y*CELL)
 				noStroke()
-				drawShape(fruitShapes.bell,[1,-1],[1,1],[-6,-6])
+				drawShape(fruitShapes.bell,[CELL/12,-CELL/12],[1,1],[-6,-6])
 				pop()
 			break
 			case "key":
 				push()
 				translate(this.pos.x*CELL,this.pos.y*CELL)
 				noStroke()
-				drawShape(fruitShapes.key,[1,-1],[1,1],[-6,-6])
+				drawShape(fruitShapes.key,[CELL/12,-CELL/12],[1,1],[-6,-6])
 				pop()
 			break
 		}
